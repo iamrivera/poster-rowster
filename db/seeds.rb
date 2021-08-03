@@ -11,5 +11,7 @@ movies = Movie.create([{title: 'Us', rating: 'R', language: 'English', director:
 posters = Poster.create([{lynk: 'https://myproject-images.s3.us-east-2.amazonaws.com/Us1_.png', votes: 0, movie: Movie.all[0]}, {lynk: 'https://myproject-images.s3.us-east-2.amazonaws.com/Us2_.png', votes: 0, movie: Movie.all[0]}, {lynk: 'https://myproject-images.s3.us-east-2.amazonaws.com/Us3_.png', votes: 0, movie: Movie.all[0]}, {lynk: 'https://myproject-images.s3.us-east-2.amazonaws.com/GetOut1_.png', votes: 0, movie: Movie.all[1]}, {lynk: 'https://myproject-images.s3.us-east-2.amazonaws.com/GetOut2.png', votes: 0, movie: Movie.all[1]}, {lynk: 'https://s3.console.aws.amazon.com/s3/buckets/myproject-images?region=us-east-2&tab=objects', votes: 0, movie: Movie.all[1]}, {lynk: 'https://myproject-images.s3.us-east-2.amazonaws.com/ShaunOfTheDead1.png', votes: 0, movie: Movie.all[2]}, {lynk: 'https://myproject-images.s3.us-east-2.amazonaws.com/ShaunOfTheDead2.png', votes: 0, movie: Movie.all[2]}, {lynk: 'https://myproject-images.s3.us-east-2.amazonaws.com/ShaunOfTheDead3.png', votes: 0, movie: Movie.all[2]}])
 
 
+
+
 #SEED CONFIRMATION
 puts "Seed Successful"
