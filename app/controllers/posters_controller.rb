@@ -5,8 +5,12 @@ class PostersController < ApplicationController
     end
 
     def show
-        poster = Poster.find(params[:id])
-        render json: poster, except: [:created_at, :updated_at]
+        poster = Poster.find_by(id: params[:id])
+        if poster 
+            render json: poster, except: [:created_at, :updated_at]
+        else 
+            render json: {message: 'Poster Not Found'}
+        end 
     end
 
 end

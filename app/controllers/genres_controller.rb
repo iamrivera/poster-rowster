@@ -5,8 +5,12 @@ class GenresController < ApplicationController
     end
 
     def show 
-        genre = Genre.find(params[:id])
-        render json: genre, except: [:created_at, :updated_at]
+        genre = Genre.find_by(id: params[:id])
+        if genre
+            render json: genre, except: [:created_at, :updated_at]
+        else 
+            render json: {message: 'Genre Not Found'}
+        end
     end
 
 
