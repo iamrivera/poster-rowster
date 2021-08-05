@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 2021_08_03_160749) do
 
   create_table "posters", force: :cascade do |t|
     t.string "lynk"
-    t.string "votes"
+    t.integer "votes"
     t.integer "movie_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

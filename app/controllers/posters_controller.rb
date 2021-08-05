@@ -13,4 +13,15 @@ class PostersController < ApplicationController
         end 
     end
 
+    def add_vote
+        poster = Poster.find_by(params[:id]) 
+        if poster
+            poster.votes += 1
+            poster.save
+            render json: {message: 'Thanks for Voting'}
+        else
+            render json: {message: 'Try again'}
+        end
+    end
+
 end
