@@ -1,6 +1,11 @@
-//FETCH GENRES & RENDER GENRES
+const baseUrl = "http://127.0.0.1:3000/"
+const genresUrl = `${baseUrl}genres`
+
+
+
+//***********GENRE: FETCH & RENDER *****************//
 function fetchGenres() {
-  fetch("http://127.0.0.1:3000/genres")
+  fetch(genresUrl)
     .then(function (response) {
       return response.json();
     })
@@ -9,22 +14,16 @@ function fetchGenres() {
 
 function renderGenres(genres) {
   const body = document.querySelector("body");
-  // Next steps - Create a div for row to append to append class=col then append div row to body
+  const genreCont = document.createElement("div");
+  genreCont.setAttribute("class", "genres");
+  body.appendChild(genreCont);
   genres.forEach((genres) => {
     let card = new GenreCard(genres.title, genres.id);
-    body.appendChild(card.render());
+    genreCont.appendChild(card.render());
   });
 }
 
-// //FETCH MOVIES & RENDER MOVIES
-// function fetchMovies() {
-//   fetch("http://127.0.0.1:3000/movies")
-//     .then(function (response) {
-//       return response.json();
-//     })
-//     .then(renderMovies);
-// }
-
+//***********MOVIE: RENDER *****************//
 function renderMovies(movies) {
   const body = document.querySelector("body");
   // Next steps - Create a div for row to append to append class=col then append div row to body
@@ -34,10 +33,7 @@ function renderMovies(movies) {
   });
 }
 
-
-
-//CREATING THE CLASSES
-// Next step --> Create a Genre Card + Movie Card classes with unique divs so you can easily hide and unhide 
+//***********CARD CLASSES: GENRE & MOVIE *****************//
 class GenreCard {
   constructor(title, id) {
     this.title = title;
@@ -47,7 +43,7 @@ class GenreCard {
   render() {
     const gcard = document.createElement("div");
     gcard.setAttribute("class", "card");
-    gcard.setAttribute("id", `gcard-${this.title}`);
+    gcard.setAttribute("id", "gcard");
     gcard.textContent = this.title;
     let btn = document.createElement("button");
     btn.innerHTML = `See ${this.title} Movies`;
@@ -57,6 +53,7 @@ class GenreCard {
         return response.json();
       })
       .then(renderMovies);
+      document.getElementsByClassName("genres")[0].style.visibility = "hidden"
     })
     gcard.append(btn);
     return gcard;
@@ -73,7 +70,7 @@ class MovieCard {
   render() {
     const mcard = document.createElement("div");
     mcard.setAttribute("class", "card");
-    mcard.setAttribute("id", `mcard-${this.title}`);
+    mcard.setAttribute("id", "mcard");
     mcard.textContent = this.title;
     let btn = document.createElement("button");
     btn.innerHTML = `See ${this.title} Posters`;
