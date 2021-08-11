@@ -1,11 +1,11 @@
 //FETCH GENRES & RENDER GENRES
 
 function fetchGenres() {
-  fetch("http://127.0.0.1:3000/genres").then(function (
-    response
-  ) {
-    return response.json();
-  }).then(renderGenres);
+  fetch("http://127.0.0.1:3000/genres")
+    .then(function (response) {
+      return response.json();
+    })
+    .then(renderGenres);
 }
 
 function renderGenres(genres) {
@@ -17,20 +17,39 @@ function renderGenres(genres) {
   });
 }
 
-//CREATING THE CARD CLASS 
-class Card { 
-  constructor(title){
-    this.title = title; 
+//FETCH MOVIES & RENDER MOVIES
+function fetchMovies() {
+  fetch("https://127.0.0.1:3000/movies")
+    .then(function (response) {
+      return response.json();
+    })
+    .then(renderMovies);
+}
+
+function renderMovies(movies) {
+  const body = document.querySelector("body");
+  movies.forEach((movies) => {
+    const card = new Card(movies.title);
+    body.appendChild(card.render());
+  });
+}
+
+//CREATING THE CARD CLASS
+class Card {
+  constructor(title) {
+    this.title = title;
   }
 
-  render (){
+  render() {
     const card = document.createElement("div");
     card.setAttribute("class", "card");
     card.setAttribute("id", `card-${this.title}`);
     card.textContent = this.title;
-    let btn = document.createElement("button"); 
-    btn.innerHTML = "See Movies";
+
+    let btn = document.createElement("button");
+    btn.innerHTML = `See ${this.title} Movies`;
     card.append(btn);
+
     return card;
   }
 }
