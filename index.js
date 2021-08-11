@@ -1,5 +1,11 @@
+//***URL CONSTANTS***//
+
 const baseUrl = "http://127.0.0.1:3000/"
 const genresUrl = `${baseUrl}genres`
+const moviesUrl = `${baseUrl}movies`
+const postersUrl = `${baseUrl}posters`
+
+
 
 
 
