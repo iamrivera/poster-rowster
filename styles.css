@@ -8,6 +8,10 @@
     top: 30px;
 }
 
+.hidden {
+  display: none;
+}
+
 body {
     background-color: aquamarine;
 }

@@ -38,78 +38,113 @@ function fetchGenres() {
     .then(function (response) {
       return response.json();
     })
-    .then(renderGenres);
+    .then(function (data) {
+      // console.log(data);
+      renderGenres(data);
+    });
 }
 
 function renderGenres(genres) {
   const genreCont = document.createElement("div");
   genreCont.setAttribute("class", "genres");
   body.appendChild(genreCont);
-  genres.forEach((genres) => {
-    let card = new GenreCard(genres.title, genres.id);
+  genres.forEach((item) => {
+    let card = new GenreCard(item.title, item.id);
     genreCont.appendChild(card.render());
   });
 }
 
 //***********MOVIE: RENDER *****************//
 function renderMovies(movies) {
-  const body = document.querySelector("body");
-  // Next steps - Create a div for row to append to append class=col then append div row to body
-  movies.forEach((movies) => {
-    let card = new MovieCard(movies.title);
-    body.appendChild(card.render());
+  movies.forEach((movie) => {
+    fetchPosters(movie.id).then(function(response) {
+     return response.json()
+    }).then(function(data) {
+      console.log(data);//clean up poster data on backend
+      let card = new MovieCard(movie.title, movie.id, data[0].lynk, data[1].lynk, data[2].lynk);
+      body.appendChild(card.render());
+    })
   });
 }
+
+
+//************* POSTER: FETCH ************ */
+function fetchPosters(movieId) { 
+  return fetch(`http://127.0.0.1:3000/movies/${movieId}/posters`)
+}
+
 
 //***********CARD CLASSES: GENRE & MOVIE *****************//
 class GenreCard {
   constructor(title, id) {
     this.title = title;
     this.id = id;
+    this.fetchMovies = this.fetchMovies.bind(this)
   }
+
+  fetchMovies() {
+    // console.log(this.id)
+    fetch(`http://127.0.0.1:3000/genres/${this.id}/movies`)
+      .then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        // console.log(data);
+        document.querySelector(".genres").classList.toggle("hidden")
+        renderMovies(data);
+      })
+  };
+  
 
   render() {
     const gcard = document.createElement("div");
     gcard.setAttribute("class", "card");
     gcard.setAttribute("id", "gcard");
     gcard.textContent = this.title;
+
     let btn = document.createElement("button");
     btn.innerHTML = `See ${this.title} Movies`;
-    btn.addEventListener("click", function () {
-      fetch(`http://127.0.0.1:3000/genres/${this.id}/movies`)
-        .then(function (response) {
-          return response.json();
-        })
-        .then(renderMovies);
-      document.getElementsByClassName("genres")[0].style.visibility = "hidden";
-    });
+    btn.addEventListener("click", this.fetchMovies) //bind takes you up one context
     gcard.append(btn);
     return gcard;
   }
+
 }
 
 class MovieCard {
-  constructor(title, id) {
+  constructor(title, id, lynk1, lynk2, lynk3) {
     this.title = title;
     this.id = id;
+    this.lynk1 = lynk1 
+    this.lynk2 = lynk2 
+    this.lynk3 = lynk3 
   }
 
   render() {
     const mcard = document.createElement("div");
+    const title = document.createElement("h1"); //can add in p tags later for release date desc etc
+    const poster1 = document.createElement("img")
+    const poster2 = document.createElement("img")
+    const poster3 = document.createElement("img") 
+
     mcard.setAttribute("class", "card");
     mcard.setAttribute("id", "mcard");
-    mcard.textContent = this.title;
-    let btn = document.createElement("button");
-    btn.innerHTML = `See ${this.title} Posters`;
-    btn.addEventListener("click", function () {
-      fetch(`http://127.0.0.1:3000/${this.id}movies`)
-        .then(function (response) {
-          return response.json();
-        })
-        .then(renderMovies);
-    });
-    mcard.append(btn);
-    return mcard;
+
+    title.innerText = this.title
+    poster1.setAttribute("src", this.lynk1)
+    poster2.setAttribute("src", this.lynk2)
+    poster3.setAttribute("src", this.lynk3) //set alt attribute = title 
+
+    mcard.appendChild(title);
+    mcard.appendChild(poster1);
+    mcard.appendChild(poster2);
+    mcard.appendChild(poster3);
+
+    // let htmlString = `
+    //   <h1>${this.title}</h1>
+    //   <img>src = this
+    // `
+
+    return mcard; // set innerHTML of mcard to the template literal on lines 142 - 145
   }
 }
 
