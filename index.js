@@ -1,5 +1,11 @@
 const baseURL = "http://127.0.0.1:3000/"
 
+class ApiLink {
+  constructor(baseURL)
+
+
+  }  
+
 
 //FETCH GENRES & RENDER GENRES
 function fetchGenres() {
@@ -36,7 +42,17 @@ function renderMovies(movies) {
   });
 }
 
-//CREATING THE GENRE CARD CLASS
+//CREATING THE CLASSES
+
+class Genre {
+  constructor(genre){
+
+  }
+}
+
+
+
+
 class Card {
   constructor(title) {
     this.title = title;
@@ -47,7 +63,7 @@ class Card {
     card.setAttribute("class", "card");
     card.setAttribute("id", `card-${this.title}`);
     card.textContent = this.title;
-    
+    debugger
     let btn = document.createElement("button");
     btn.innerHTML = `See ${this.title} Movies`;
     // btn.addEventListener("click", )
