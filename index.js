@@ -1,10 +1,5 @@
 const baseURL = "http://127.0.0.1:3000/"
-
-class ApiLink {
-  constructor(baseURL)
-
-
-  }  
+ 
 
 
 //FETCH GENRES & RENDER GENRES
@@ -25,33 +20,8 @@ function renderGenres(genres) {
   });
 }
 
-//FETCH MOVIES & RENDER MOVIES
-function fetchMovies() {
-  fetch("https://127.0.0.1:3000/movies")
-    .then(function (response) {
-      return response.json();
-    })
-    .then(renderMovies);
-}
-
-function renderMovies(movies) {
-  const body = document.querySelector("body");
-  movies.forEach((movies) => {
-    const card = new Card(movies.title);
-    body.appendChild(card.render());
-  });
-}
 
 //CREATING THE CLASSES
-
-class Genre {
-  constructor(genre){
-
-  }
-}
-
-
-
 
 class Card {
   constructor(title) {
