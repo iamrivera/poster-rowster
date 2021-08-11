@@ -1,13 +1,36 @@
-//***URL CONSTANTS***//
+//*** CONSTANTS ***//
 
-const baseUrl = "http://127.0.0.1:3000/"
-const genresUrl = `${baseUrl}genres`
-const moviesUrl = `${baseUrl}movies`
-const postersUrl = `${baseUrl}posters`
+//URLS
+const baseUrl = "http://127.0.0.1:3000/";
+const genresUrl = `${baseUrl}genres`;
+const moviesUrl = `${baseUrl}movies`;
+const postersUrl = `${baseUrl}posters`;
 
+//Document Elements
+const body = document.querySelector("body");
 
+//*** TOP NAV ***//
 
+const topNav = document.createElement("div");
+topNav.setAttribute("class", "topnav");
 
+const genreA = document.createElement("a");
+genreA.setAttribute("class", "active");
+genreA.setAttribute("href",genresUrl);
+genreA.innerHTML = "Genres"
+topNav.appendChild(genreA);
+
+const movieA = document.createElement("a");
+movieA.setAttribute("href",moviesUrl);
+movieA.innerHTML = "Movies"
+topNav.appendChild(movieA);
+
+const posterA = document.createElement("a");
+posterA.setAttribute("href",postersUrl);
+posterA.innerHTML = "Posters"
+topNav.appendChild(posterA);
+
+body.appendChild(topNav);
 
 //***********GENRE: FETCH & RENDER *****************//
 function fetchGenres() {
@@ -43,7 +66,7 @@ function renderMovies(movies) {
 class GenreCard {
   constructor(title, id) {
     this.title = title;
-    this.id = id
+    this.id = id;
   }
 
   render() {
@@ -53,24 +76,23 @@ class GenreCard {
     gcard.textContent = this.title;
     let btn = document.createElement("button");
     btn.innerHTML = `See ${this.title} Movies`;
-    btn.addEventListener("click", function(){
+    btn.addEventListener("click", function () {
       fetch(`http://127.0.0.1:3000/${this.id}movies`)
-      .then(function (response) {
-        return response.json();
-      })
-      .then(renderMovies);
-      document.getElementsByClassName("genres")[0].style.visibility = "hidden"
-    })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(renderMovies);
+      document.getElementsByClassName("genres")[0].style.visibility = "hidden";
+    });
     gcard.append(btn);
     return gcard;
   }
 }
 
-
 class MovieCard {
   constructor(title, id) {
     this.title = title;
-    this.id = id
+    this.id = id;
   }
 
   render() {
@@ -80,22 +102,17 @@ class MovieCard {
     mcard.textContent = this.title;
     let btn = document.createElement("button");
     btn.innerHTML = `See ${this.title} Posters`;
-    btn.addEventListener("click", function(){
+    btn.addEventListener("click", function () {
       fetch(`http://127.0.0.1:3000/${this.id}movies`)
-      .then(function (response) {
-        return response.json();
-      })
-      .then(renderMovies);
-    })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(renderMovies);
+    });
     mcard.append(btn);
     return mcard;
   }
 }
-
-
-
-
-
 
 //CALLING THE FUNCTIONS
 document.addEventListener("DOMContentLoaded", function () {
