@@ -42,7 +42,6 @@ function fetchGenres() {
 }
 
 function renderGenres(genres) {
-  const body = document.querySelector("body");
   const genreCont = document.createElement("div");
   genreCont.setAttribute("class", "genres");
   body.appendChild(genreCont);
@@ -77,7 +76,7 @@ class GenreCard {
     let btn = document.createElement("button");
     btn.innerHTML = `See ${this.title} Movies`;
     btn.addEventListener("click", function () {
-      fetch(`http://127.0.0.1:3000/${this.id}movies`)
+      fetch(`http://127.0.0.1:3000/genres/${this.id}/movies`)
         .then(function (response) {
           return response.json();
         })

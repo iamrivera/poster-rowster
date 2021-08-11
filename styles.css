@@ -2,6 +2,12 @@
     width: 18rem;
 }
 
+.genres {
+    position: relative;
+    left: 30px;
+    top: 30px;
+}
+
 body {
     background-color: aquamarine;
 }
