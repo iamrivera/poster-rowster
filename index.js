@@ -1,5 +1,7 @@
-//FETCH GENRES & RENDER GENRES
+const baseURL = "http://127.0.0.1:3000/"
 
+
+//FETCH GENRES & RENDER GENRES
 function fetchGenres() {
   fetch("http://127.0.0.1:3000/genres")
     .then(function (response) {
@@ -34,7 +36,7 @@ function renderMovies(movies) {
   });
 }
 
-//CREATING THE CARD CLASS
+//CREATING THE GENRE CARD CLASS
 class Card {
   constructor(title) {
     this.title = title;
@@ -45,12 +47,16 @@ class Card {
     card.setAttribute("class", "card");
     card.setAttribute("id", `card-${this.title}`);
     card.textContent = this.title;
-
+    
     let btn = document.createElement("button");
     btn.innerHTML = `See ${this.title} Movies`;
+    // btn.addEventListener("click", )
     card.append(btn);
-
     return card;
+  }
+
+  handleGenreClick() {
+    return ``
   }
 }
 
