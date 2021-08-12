@@ -34,18 +34,6 @@ body.appendChild(topNav);
 
 //*********** GENRE: CREATE NEW GENRE W/FETCH ******//
 
-// const configurationObject = {
-//   method: "POST",
-//   headers: {
-//     "Content-Type": "application/json",
-//     Accept: "application/json",
-//   },
-//   body: JSON.stringify({
-//     dogName: "Byron",
-//     dogBreed: "Poodle",
-//   }),
-// };
-
   let openPopFormBtn = document.createElement("button");
   openPopFormBtn.setAttribute("class", "open-button");
   openPopFormBtn.innerText = "Add Genre";
@@ -56,17 +44,17 @@ body.appendChild(topNav);
   genrePopForm.setAttribute("class", "form-popup");
   genrePopForm.setAttribute("id", "myForm");
   let gpfInnerHtml = `
-  <form action="" class="form-container">
+  <form class="form-container" id="theForm">
       <h1>Add a New Genre</h1>
 
       <label for="title"><b>Title</b></label>
-      <input type="text" placeholder="Enter Genre Name" name="title" required>
+      <input type="text" id="formtitle" placeholder="Enter Genre Name" name="title" required>
 
       <label for="glynk"><b>Cover Image Link</b></label>
-      <input type="text" placeholder="Enter Link" name="glynk" required>
+      <input type="text" id="formglynk" placeholder="Enter Link" name="glynk" required>
 
       <button type="submit" class="btn">Add Genre</button>
-      <button type="submit" class="btn cancel"}>Close</button>
+      <button type="submit"  class="btn cancel"}>Close</button>
     </form>`;
   genrePopForm.innerHTML = gpfInnerHtml;
   body.appendChild(genrePopForm);
@@ -75,10 +63,37 @@ body.appendChild(topNav);
     document.getElementById("myForm").style.display = "block";
   }
 
-  function closeForm() {
+  const theForm = document.getElementById('theForm')
+
+  theForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+  
+    const formData = {
+      title: `${document.getElementById("formtitle").value}`,
+      glynk: `${document.getElementById("formglynk").value}`
+    }
+  
+    const configurationObject = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+      body: JSON.stringify(formData),
+    };
+  
+    fetch(genresUrl, configurationObject);
+    
+    function closeForm() {
     document.getElementById("myForm").style.display = "none";
   }
 
+  closeForm();
+})
+
+
+
+  //Remember - Use document.getElementById("formtitle").value to get the input values and assign to object
 
 //***********GENRE: FETCH & RENDER *****************//
 function fetchGenres() {

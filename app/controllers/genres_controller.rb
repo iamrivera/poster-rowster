@@ -36,7 +36,7 @@ class GenresController < ApplicationController
     end
 
     def genre_params
-        params.require(:genre).permit(:title)
+        params.require(:genre).permit(:title, :glynk)
     end
 
 
