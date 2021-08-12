@@ -16,21 +16,62 @@ topNav.setAttribute("class", "topnav");
 
 const genreA = document.createElement("a");
 genreA.setAttribute("class", "active");
-genreA.setAttribute("href",genresUrl);
-genreA.innerHTML = "Genres"
+genreA.setAttribute("href", genresUrl);
+genreA.innerHTML = "Genres";
 topNav.appendChild(genreA);
 
 const movieA = document.createElement("a");
-movieA.setAttribute("href",moviesUrl);
-movieA.innerHTML = "Movies"
+movieA.setAttribute("href", moviesUrl);
+movieA.innerHTML = "Movies";
 topNav.appendChild(movieA);
 
 const posterA = document.createElement("a");
-posterA.setAttribute("href",postersUrl);
-posterA.innerHTML = "Posters"
+posterA.setAttribute("href", postersUrl);
+posterA.innerHTML = "Posters";
 topNav.appendChild(posterA);
 
 body.appendChild(topNav);
+
+//*********** GENRE: CREATE NEW GENRE W/FETCH ******//
+
+const configurationObject = {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
+  body: JSON.stringify({
+    dogName: "Byron",
+    dogBreed: "Poodle",
+  }),
+};
+
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+
+let genrePopForm = document.createElement("div");
+genrePopForm.setAttribute("class", "form-popup");
+genrePopForm.setAttribute("id", "myForm");
+let gpfInnerHtml = `
+<form action="/action_page.php" class="form-container">
+    <h1>Add a New Genre</h1>
+
+    <label for="title"><b>Title</b></label>
+    <input type="text" placeholder="Enter Genre Name" name="title" required>
+
+    <label for="glynk"><b>Cover Image Link</b></label>
+    <input type="text" placeholder="Enter Link" name="glynk" required>
+
+    <button type="submit" class="btn">Add Genre</button>
+    <button type="submit" class="btn cancel" onclick="closeForm()">Close</button>
+  </form>`;
+genrePopForm.innerHTML = gpfInnerHtml;
+body.appendChild(genrePopForm);
 
 //***********GENRE: FETCH & RENDER *****************//
 function fetchGenres() {
@@ -49,7 +90,7 @@ function renderGenres(genres) {
   genreCont.setAttribute("class", "genres");
   body.appendChild(genreCont);
   genres.forEach((item) => {
-    let card = new GenreCard(item.title, item.id);
+    let card = new GenreCard(item.title, item.id, item.glynk);
     genreCont.appendChild(card.render());
   });
 }
@@ -57,29 +98,36 @@ function renderGenres(genres) {
 //***********MOVIE: RENDER *****************//
 function renderMovies(movies) {
   movies.forEach((movie) => {
-    fetchPosters(movie.id).then(function(response) {
-     return response.json()
-    }).then(function(data) {
-      console.log(data);//clean up poster data on backend
-      let card = new MovieCard(movie.title, movie.id, data[0].lynk, data[1].lynk, data[2].lynk);
-      body.appendChild(card.render());
-    })
+    fetchPosters(movie.id)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        console.log(data); //clean up poster data on backend
+        let card = new MovieCard(
+          movie.title,
+          movie.id,
+          data[0].lynk,
+          data[1].lynk,
+          data[2].lynk
+        );
+        body.appendChild(card.render());
+      });
   });
 }
 
-
 //************* POSTER: FETCH ************ */
-function fetchPosters(movieId) { 
-  return fetch(`http://127.0.0.1:3000/movies/${movieId}/posters`)
+function fetchPosters(movieId) {
+  return fetch(`http://127.0.0.1:3000/movies/${movieId}/posters`);
 }
-
 
 //***********CARD CLASSES: GENRE & MOVIE *****************//
 class GenreCard {
-  constructor(title, id) {
+  constructor(title, id, glynk) {
     this.title = title;
     this.id = id;
-    this.fetchMovies = this.fetchMovies.bind(this)
+    this.glynk = glynk;
+    this.fetchMovies = this.fetchMovies.bind(this);
   }
 
   fetchMovies() {
@@ -87,77 +135,61 @@ class GenreCard {
     fetch(`http://127.0.0.1:3000/genres/${this.id}/movies`)
       .then(function (response) {
         return response.json();
-      }).then(function (data) {
-        // console.log(data);
-        document.querySelector(".genres").classList.toggle("hidden")
-        renderMovies(data);
       })
-  };
-  
+      .then(function (data) {
+        // console.log(data);
+        document.querySelector(".genres").classList.toggle("hidden");
+        renderMovies(data);
+      });
+  }
 
   render() {
     const gcard = document.createElement("div");
     gcard.setAttribute("class", "card");
     gcard.setAttribute("id", "gcard");
+    const gcardimg = document.createElement("img");
+    gcardimg.setAttribute("src", this.glynk);
     gcard.textContent = this.title;
+    gcard.appendChild(gcardimg);
 
     let btn = document.createElement("button");
     btn.innerHTML = `See ${this.title} Movies`;
-    btn.addEventListener("click", this.fetchMovies) //bind takes you up one context
+    btn.addEventListener("click", this.fetchMovies); //bind takes you up one context
     gcard.append(btn);
+
     return gcard;
   }
-
-
-  <div class="card mb-3">
-  <img class="card-img-top" src="..." alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-  </div>
-</div>
-<div class="card">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-  </div>
-  <img class="card-img-bottom" src="..." alt="Card image cap">
-</div>
-
 }
 
 class MovieCard {
   constructor(title, id, lynk1, lynk2, lynk3) {
     this.title = title;
     this.id = id;
-    this.lynk1 = lynk1 
-    this.lynk2 = lynk2 
-    this.lynk3 = lynk3 
+    this.lynk1 = lynk1;
+    this.lynk2 = lynk2;
+    this.lynk3 = lynk3;
   }
 
   render() {
     const mcard = document.createElement("div");
     const title = document.createElement("h1"); //can add in p tags later for release date desc etc
-    const poster1 = document.createElement("img")
-    const poster2 = document.createElement("img")
-    const poster3 = document.createElement("img") 
+    const poster1 = document.createElement("img");
+    const poster2 = document.createElement("img");
+    const poster3 = document.createElement("img");
 
     mcard.setAttribute("class", "card");
     mcard.setAttribute("id", "mcard");
 
-    title.innerText = this.title
-    poster1.setAttribute("src", this.lynk1)
-    poster2.setAttribute("src", this.lynk2)
-    poster3.setAttribute("src", this.lynk3) //set alt attribute = title 
+    title.innerText = this.title;
+    poster1.setAttribute("src", this.lynk1);
+    poster2.setAttribute("src", this.lynk2);
+    poster3.setAttribute("src", this.lynk3); //set alt attribute = title
 
     mcard.appendChild(title);
     mcard.appendChild(poster1);
     mcard.appendChild(poster2);
     mcard.appendChild(poster3);
 
-    
     // let htmlString = `
     //   <h1>${this.title}</h1>
     //   <img>src = this
