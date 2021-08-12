@@ -13,4 +13,15 @@ class MoviesController < ApplicationController
         end
     end
 
+    def movie_posters
+        # byebug
+        movie = Movie.find_by(id: params[:id])
+        posters = movie.posters
+        if movie && posters
+            render json: posters
+        else 
+            render json: {message: 'Posters Not Found'}
+        end
+    end
+
 end

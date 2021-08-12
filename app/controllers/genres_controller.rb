@@ -24,6 +24,17 @@ class GenresController < ApplicationController
         end
     end
 
+    def genre_movies
+        # byebug
+        genre = Genre.find_by(id: params[:id])
+        movies = genre.movies
+        if genre && movies 
+            render json: movies
+        else 
+            render json: {message: 'Movies Not Found'}
+        end
+    end
+
     def genre_params
         params.require(:genre).permit(:title)
     end
