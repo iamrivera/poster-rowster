@@ -1,3 +1,9 @@
+//*** TODO ****//
+//refresh after adding a genre to display new card
+//movie card displays poster stats for each poster 
+//poster has a vote button the increases the vote count after user clicks it 
+
+
 //*** CONSTANTS ***//
 
 //URLS
