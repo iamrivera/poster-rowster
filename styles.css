@@ -6,6 +6,7 @@
     position: relative;
     left: 30px;
     top: 30px;
+    width: 50%;
 }
 
 .hidden {
@@ -74,7 +75,7 @@ body {
 }
 
 /* Full-width input fields */
-.form-container input[type=text], .form-container input[type=text] {
+.form-container input[type=text] {
   width: 100%;
   padding: 15px;
   margin: 5px 0 22px 0;
@@ -83,7 +84,7 @@ body {
 }
 
 /* When the inputs get focus, do something */
-.form-container input[type=text]:focus, .form-container input[type=text]:focus {
+.form-container input[type=text]:focus {
   background-color: #ddd;
   outline: none;
 }

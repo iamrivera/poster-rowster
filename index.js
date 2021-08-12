@@ -34,44 +34,51 @@ body.appendChild(topNav);
 
 //*********** GENRE: CREATE NEW GENRE W/FETCH ******//
 
-const configurationObject = {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-  },
-  body: JSON.stringify({
-    dogName: "Byron",
-    dogBreed: "Poodle",
-  }),
-};
+// const configurationObject = {
+//   method: "POST",
+//   headers: {
+//     "Content-Type": "application/json",
+//     Accept: "application/json",
+//   },
+//   body: JSON.stringify({
+//     dogName: "Byron",
+//     dogBreed: "Poodle",
+//   }),
+// };
 
-function openForm() {
-  document.getElementById("myForm").style.display = "block";
-}
+  let openPopFormBtn = document.createElement("button");
+  openPopFormBtn.setAttribute("class", "open-button");
+  openPopFormBtn.innerText = "Add Genre";
+  body.appendChild(openPopFormBtn);
+  openPopFormBtn.addEventListener("click", openForm)
 
-function closeForm() {
-  document.getElementById("myForm").style.display = "none";
-}
+  let genrePopForm = document.createElement("div");
+  genrePopForm.setAttribute("class", "form-popup");
+  genrePopForm.setAttribute("id", "myForm");
+  let gpfInnerHtml = `
+  <form action="" class="form-container">
+      <h1>Add a New Genre</h1>
 
-let genrePopForm = document.createElement("div");
-genrePopForm.setAttribute("class", "form-popup");
-genrePopForm.setAttribute("id", "myForm");
-let gpfInnerHtml = `
-<form action="/action_page.php" class="form-container">
-    <h1>Add a New Genre</h1>
+      <label for="title"><b>Title</b></label>
+      <input type="text" placeholder="Enter Genre Name" name="title" required>
 
-    <label for="title"><b>Title</b></label>
-    <input type="text" placeholder="Enter Genre Name" name="title" required>
+      <label for="glynk"><b>Cover Image Link</b></label>
+      <input type="text" placeholder="Enter Link" name="glynk" required>
 
-    <label for="glynk"><b>Cover Image Link</b></label>
-    <input type="text" placeholder="Enter Link" name="glynk" required>
+      <button type="submit" class="btn">Add Genre</button>
+      <button type="submit" class="btn cancel"}>Close</button>
+    </form>`;
+  genrePopForm.innerHTML = gpfInnerHtml;
+  body.appendChild(genrePopForm);
 
-    <button type="submit" class="btn">Add Genre</button>
-    <button type="submit" class="btn cancel" onclick="closeForm()">Close</button>
-  </form>`;
-genrePopForm.innerHTML = gpfInnerHtml;
-body.appendChild(genrePopForm);
+  function openForm() {
+    document.getElementById("myForm").style.display = "block";
+  }
+
+  function closeForm() {
+    document.getElementById("myForm").style.display = "none";
+  }
+
 
 //***********GENRE: FETCH & RENDER *****************//
 function fetchGenres() {
