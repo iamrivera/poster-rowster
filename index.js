@@ -16,7 +16,6 @@ topNav.setAttribute("class", "topnav");
 
 const genreA = document.createElement("a");
 genreA.setAttribute("class", "active");
-genreA.setAttribute("href", genresUrl);
 genreA.innerHTML = "Genres";
 topNav.appendChild(genreA);
 
@@ -91,10 +90,6 @@ body.appendChild(topNav);
   closeForm();
 })
 
-
-
-  //Remember - Use document.getElementById("formtitle").value to get the input values and assign to object
-
 //***********GENRE: FETCH & RENDER *****************//
 function fetchGenres() {
   fetch(genresUrl)
@@ -108,13 +103,24 @@ function fetchGenres() {
 }
 
 function renderGenres(genres) {
+  const row = document.createElement("div");
+  row.setAttribute("class", "row");
+  body.appendChild(row);
+  
+  const column = document.createElement("div");
+  column.setAttribute("class", "column");
+
   const genreCont = document.createElement("div");
   genreCont.setAttribute("class", "genres");
-  body.appendChild(genreCont);
+
+  row.appendChild(column);
+  column.appendChild(genreCont);
+
   genres.forEach((item) => {
     let card = new GenreCard(item.title, item.id, item.glynk);
     genreCont.appendChild(card.render());
   });
+  
 }
 
 //***********MOVIE: RENDER *****************//
@@ -125,7 +131,7 @@ function renderMovies(movies) {
         return response.json();
       })
       .then(function (data) {
-        console.log(data); //clean up poster data on backend
+        console.log(data); 
         let card = new MovieCard(
           movie.title,
           movie.id,
@@ -194,7 +200,7 @@ class MovieCard {
 
   render() {
     const mcard = document.createElement("div");
-    const title = document.createElement("h1"); //can add in p tags later for release date desc etc
+    const title = document.createElement("h1"); 
     const poster1 = document.createElement("img");
     const poster2 = document.createElement("img");
     const poster3 = document.createElement("img");
@@ -205,19 +211,14 @@ class MovieCard {
     title.innerText = this.title;
     poster1.setAttribute("src", this.lynk1);
     poster2.setAttribute("src", this.lynk2);
-    poster3.setAttribute("src", this.lynk3); //set alt attribute = title
+    poster3.setAttribute("src", this.lynk3); //set alt attribute = title for accessability - code inclusively
 
     mcard.appendChild(title);
     mcard.appendChild(poster1);
     mcard.appendChild(poster2);
     mcard.appendChild(poster3);
 
-    // let htmlString = `
-    //   <h1>${this.title}</h1>
-    //   <img>src = this
-    // `
-
-    return mcard; // set innerHTML of mcard to the template literal on lines 142 - 145
+    return mcard;
   }
 }
 
