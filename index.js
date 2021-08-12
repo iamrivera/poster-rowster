@@ -1,8 +1,7 @@
 //*** TODO ****//
 //refresh after adding a genre to display new card
-//movie card displays poster stats for each poster 
-//poster has a vote button the increases the vote count after user clicks it 
-
+//movie card displays poster stats for each poster (Start here today 8-12)
+//poster has a vote button the increases the vote count after user clicks it
 
 //*** CONSTANTS ***//
 
@@ -39,16 +38,16 @@ body.appendChild(topNav);
 
 //*********** GENRE: CREATE NEW GENRE W/FETCH ******//
 
-  let openPopFormBtn = document.createElement("button");
-  openPopFormBtn.setAttribute("class", "open-button");
-  openPopFormBtn.innerText = "Add Genre";
-  body.appendChild(openPopFormBtn);
-  openPopFormBtn.addEventListener("click", openForm)
+let openPopFormBtn = document.createElement("button");
+openPopFormBtn.setAttribute("class", "open-button");
+openPopFormBtn.innerText = "Add Genre";
+body.appendChild(openPopFormBtn);
+openPopFormBtn.addEventListener("click", openForm);
 
-  let genrePopForm = document.createElement("div");
-  genrePopForm.setAttribute("class", "form-popup");
-  genrePopForm.setAttribute("id", "myForm");
-  let gpfInnerHtml = `
+let genrePopForm = document.createElement("div");
+genrePopForm.setAttribute("class", "form-popup");
+genrePopForm.setAttribute("id", "myForm");
+let gpfInnerHtml = `
   <form class="form-container" id="theForm">
       <h1>Add a New Genre</h1>
 
@@ -61,40 +60,40 @@ body.appendChild(topNav);
       <button type="submit" class="btn">Add Genre</button>
       <button type="submit"  class="btn cancel"}>Close</button>
     </form>`;
-  genrePopForm.innerHTML = gpfInnerHtml;
-  body.appendChild(genrePopForm);
+genrePopForm.innerHTML = gpfInnerHtml;
+body.appendChild(genrePopForm);
 
-  function openForm() {
-    document.getElementById("myForm").style.display = "block";
-  }
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
 
-  const theForm = document.getElementById('theForm')
+const theForm = document.getElementById("theForm");
 
-  theForm.addEventListener('submit', function (event) {
-    event.preventDefault();
-  
-    const formData = {
-      title: `${document.getElementById("formtitle").value}`,
-      glynk: `${document.getElementById("formglynk").value}`
-    }
-  
-    const configurationObject = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-      },
-      body: JSON.stringify(formData),
-    };
-  
-    fetch(genresUrl, configurationObject);
-    
-    function closeForm() {
+theForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  const formData = {
+    title: `${document.getElementById("formtitle").value}`,
+    glynk: `${document.getElementById("formglynk").value}`,
+  };
+
+  const configurationObject = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify(formData),
+  };
+
+  fetch(genresUrl, configurationObject);
+
+  function closeForm() {
     document.getElementById("myForm").style.display = "none";
   }
 
   closeForm();
-})
+});
 
 //***********GENRE: FETCH & RENDER *****************//
 function fetchGenres() {
@@ -109,24 +108,24 @@ function fetchGenres() {
 }
 
 function renderGenres(genres) {
-  const row = document.createElement("div");
-  row.setAttribute("class", "row");
-  body.appendChild(row);
-  
-  const column = document.createElement("div");
-  column.setAttribute("class", "column");
+  // const row = document.createElement("div");
+  // row.setAttribute("class", "row");
+  // body.appendChild(row);
+
+  // const column = document.createElement("div");
+  // column.setAttribute("class", "column");
 
   const genreCont = document.createElement("div");
   genreCont.setAttribute("class", "genres");
+  body.appendChild(genreCont);
 
-  row.appendChild(column);
-  column.appendChild(genreCont);
+  // row.appendChild(column);
+  // column.appendChild(genreCont);
 
-  genres.forEach((item) => {
+  genres.forEach((item, index) => {
     let card = new GenreCard(item.title, item.id, item.glynk);
     genreCont.appendChild(card.render());
   });
-  
 }
 
 //***********MOVIE: RENDER *****************//
@@ -137,13 +136,16 @@ function renderMovies(movies) {
         return response.json();
       })
       .then(function (data) {
-        console.log(data); 
+        console.log(data);
         let card = new MovieCard(
           movie.title,
           movie.id,
           data[0].lynk,
+          data[0].votes,
           data[1].lynk,
-          data[2].lynk
+          data[1].votes,
+          data[2].lynk,
+          data[2].votes,
         );
         body.appendChild(card.render());
       });
@@ -196,19 +198,40 @@ class GenreCard {
 }
 
 class MovieCard {
-  constructor(title, id, lynk1, lynk2, lynk3) {
+  constructor(title, id, lynk1,vote1, lynk2, vote2, lynk3, vote3) {
     this.title = title;
     this.id = id;
     this.lynk1 = lynk1;
     this.lynk2 = lynk2;
     this.lynk3 = lynk3;
+    this.vote1 = vote1;
+    this.vote2 = vote2;
+    this.vote3 = vote3; 
   }
 
   render() {
     const mcard = document.createElement("div");
-    const title = document.createElement("h1"); 
+    const title = document.createElement("h1");
+
+    //make each image own card //css card include vertical-align: top
+    const pcard1 = document.createElement("div"); 
+    pcard1.setAttribute("class", "card"); //can have multiple class w/ corresponding CSS - that's what class for 
+    pcard1.setAttribute("id", "pcard"); //fix id issue later - unique one of a kind 
     const poster1 = document.createElement("img");
+    const votes1 = document.createElement("p");
+    votes1.innerText = `Votes: ${this.vote1}`;
+    pcard1.appendChild(votes1);
+    pcard1.appendChild(poster1);
+
+    const pcard2 = document.createElement("div");
+    pcard2.setAttribute("class", "card");
+    pcard2.setAttribute("id", "pcard")
     const poster2 = document.createElement("img");
+    pcard2.appendChild(poster2);
+
+    const pcard3 = document.createElement("div");
+    pcard2.setAttribute("class", "card");
+    pcard2.setAttribute("id", "pcard");
     const poster3 = document.createElement("img");
 
     mcard.setAttribute("class", "card");
@@ -220,9 +243,9 @@ class MovieCard {
     poster3.setAttribute("src", this.lynk3); //set alt attribute = title for accessability - code inclusively
 
     mcard.appendChild(title);
-    mcard.appendChild(poster1);
-    mcard.appendChild(poster2);
-    mcard.appendChild(poster3);
+    mcard.appendChild(pcard1);
+    mcard.appendChild(pcard2);
+    mcard.appendChild(pcard3);
 
     return mcard;
   }
