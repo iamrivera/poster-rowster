@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 2021_08_03_160749) do
 
   create_table "genres", force: :cascade do |t|
     t.string "title"
+    t.string "glynk"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
