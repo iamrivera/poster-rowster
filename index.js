@@ -227,12 +227,19 @@ class MovieCard {
     pcard2.setAttribute("class", "card");
     pcard2.setAttribute("id", "pcard")
     const poster2 = document.createElement("img");
+    const votes2 = document.createElement("p");
+    votes2.innerText = `Votes: ${this.vote2}`;
+    pcard2.appendChild(votes2);
     pcard2.appendChild(poster2);
 
     const pcard3 = document.createElement("div");
-    pcard2.setAttribute("class", "card");
-    pcard2.setAttribute("id", "pcard");
+    pcard3.setAttribute("class", "card");
+    pcard3.setAttribute("id", "pcard");
     const poster3 = document.createElement("img");
+    const votes3 = document.createElement("p");
+    votes3.innerText = `Votes: ${this.vote3}`;
+    pcard3.appendChild(votes3);
+    pcard3.appendChild(poster3);
 
     mcard.setAttribute("class", "card");
     mcard.setAttribute("id", "mcard");
