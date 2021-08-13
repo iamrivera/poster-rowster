@@ -46,9 +46,9 @@ body.appendChild(movieContainer);
 const logo = document.createElement("div");
 logo.setAttribute("class", "logo");
 const logoImg = document.createElement("img");
-logoImg.setAttribute("src","https://myproject-images.s3.us-east-2.amazonaws.com/PosterRoasterLogo.PNG");
+logoImg.setAttribute("src","https://myproject-images.s3.us-east-2.amazonaws.com/PosterRoasterLogo_Test.PNG");
 logo.appendChild(logoImg);
-body.appendChild(logo);
+topNav.appendChild(logo);
 
 //*********** GENRE: CREATE NEW GENRE W/FETCH POST ******//
 
