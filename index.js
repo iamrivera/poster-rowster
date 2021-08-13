@@ -43,7 +43,7 @@ const movieContainer = document.createElement("div");
 movieContainer.setAttribute("class", "movie-container");
 body.appendChild(movieContainer);
 
-//*********** GENRE: CREATE NEW GENRE W/FETCH ******//
+//*********** GENRE: CREATE NEW GENRE W/FETCH POST ******//
 
 let openPopFormBtn = document.createElement("button");
 openPopFormBtn.setAttribute("class", "open-button");
@@ -120,19 +120,9 @@ function fetchGenres() {
 }
 
 function renderGenres(genres) {
-  // const row = document.createElement("div");
-  // row.setAttribute("class", "row");
-  // body.appendChild(row);
-
-  // const column = document.createElement("div");
-  // column.setAttribute("class", "column");
-
   const genreCont = document.createElement("div");
   genreCont.setAttribute("class", "genres");
   body.appendChild(genreCont);
-
-  // row.appendChild(column);
-  // column.appendChild(genreCont);
 
   genres.forEach((item) => {
     let card = new GenreCard(item.title, item.id, item.glynk);
@@ -167,7 +157,7 @@ function renderMovies(movies) {
   });
 }
 
-//************* POSTER: FETCH & VOTE *************//
+//************* POSTER: FETCH *************//
 function fetchPosters(movieId) {
   return fetch(`http://127.0.0.1:3000/movies/${movieId}/posters`);
 }
@@ -243,9 +233,7 @@ class PosterCard {
   }
 
   voteNow(e) {
-    // console.log(e.target.dataset.id1, this.id1);
-    // debugger
-    fetch(`http://127.0.0.1:3000/posters/${this.id}/add_vote`) //e is large event object - target is a property | transference of data
+    fetch(`http://127.0.0.1:3000/posters/${this.id}/add_vote`)
       .then(function (response) {
         return response.json();
       })
@@ -285,54 +273,9 @@ class MovieCard {
     this.id3 = id3;
   }
 
-  // posterVote() {
-  //   // console.log(e.target.dataset.id1, this.id1);
-  //   // debugger
-  //   fetch(`http://127.0.0.1:3000/posters/${this.id1}/add_vote`) //e is large event object - target is a property | transference of data
-  //     .then(function (response) {
-  //       return response.json();
-  //     })
-  //     .then(function (data) {
-  //       console.log(data);
-  //       alert(`${data["message"]}`);
-  //     });
-  // }
-
   render() {
     const mcard = document.createElement("div");
     const title = document.createElement("h1");
-
-    // const pcard1 = document.createElement("div");
-    // pcard1.setAttribute("class", "pcard");
-
-    // const poster1 = document.createElement("img");
-    // const votes1 = document.createElement("p");
-    // votes1.innerText = `Votes: ${this.vote1}`;
-    // const pbtn1 = document.createElement("button");
-    // pbtn1.textContent = "Vote Now!";
-    // // pbtn1.dataset.id = this.id1 //custom attributes in html
-    // pbtn1.addEventListener("click", this.posterVote);
-    // pcard1.appendChild(pbtn1);
-    // pcard1.appendChild(votes1);
-    // pcard1.appendChild(poster1);
-
-    // const pcard2 = document.createElement("div");
-    // pcard2.setAttribute("class", "pcard");
-    // // pcard2.setAttribute("id", "pcard")
-    // const poster2 = document.createElement("img");
-    // const votes2 = document.createElement("p");
-    // votes2.innerText = `Votes: ${this.vote2}`;
-    // pcard2.appendChild(votes2);
-    // pcard2.appendChild(poster2);
-
-    // const pcard3 = document.createElement("div");
-    // pcard3.setAttribute("class", "pcard");
-    // // pcard3.setAttribute("id", "pcard");
-    // const poster3 = document.createElement("img");
-    // const votes3 = document.createElement("p");
-    // votes3.innerText = `Votes: ${this.vote3}`;
-    // pcard3.appendChild(votes3);
-    // pcard3.appendChild(poster3);
 
     let poster1 = new PosterCard(this.id1, this.lynk1, this.vote1);
     let poster2 = new PosterCard(this.id2, this.lynk2, this.vote2);
@@ -341,9 +284,6 @@ class MovieCard {
     mcard.setAttribute("class", "mcard");
 
     title.innerText = this.title;
-    // poster1.setAttribute("src", this.lynk1);
-    // poster2.setAttribute("src", this.lynk2);
-    // poster3.setAttribute("src", this.lynk3); //set alt attribute = title for accessability - code inclusively
 
     mcard.appendChild(title);
     mcard.appendChild(poster1.render());
