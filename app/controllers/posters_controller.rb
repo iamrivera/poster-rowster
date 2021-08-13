@@ -14,11 +14,12 @@ class PostersController < ApplicationController
     end
 
     def add_vote
+        # byebug Id is not aligned find by 10 give post id of 1 
         poster = Poster.find_by(params[:id]) 
         if poster
             poster.votes += 1
             poster.save
-            render json: {message: 'Thanks for Voting'}
+            render json: {message: 'Thanks for Voting', votes: poster.votes}
         else
             render json: {message: 'Try again'}
         end
