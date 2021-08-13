@@ -14,6 +14,10 @@ const postersUrl = `${baseUrl}posters`;
 //Document Elements
 const body = document.querySelector("body");
 
+const movieContainer = document.createElement("div");
+movieContainer.setAttribute("class", "movie-container");
+body.appendChild(movieContainer);
+
 //*** TOP NAV ***//
 
 // const topNav = document.createElement("div");
@@ -148,7 +152,7 @@ function renderMovies(movies) {
           data[2].lynk,
           data[2].votes,
         );
-        body.appendChild(card.render());
+        movieContainer.appendChild(card.render());
       });
   });
 }
@@ -213,8 +217,10 @@ class MovieCard {
   }
 
   render() {
+
     const mcard = document.createElement("div");
     const title = document.createElement("h1");
+    // movieContainer.appendChild(mcard);
 
     //make each image own card //css card include vertical-align: top
     const pcard1 = document.createElement("div"); 
@@ -256,6 +262,7 @@ class MovieCard {
     mcard.appendChild(pcard1);
     mcard.appendChild(pcard2);
     mcard.appendChild(pcard3);
+
 
     return mcard;
   }
