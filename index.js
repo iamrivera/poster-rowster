@@ -16,25 +16,25 @@ const body = document.querySelector("body");
 
 //*** TOP NAV ***//
 
-const topNav = document.createElement("div");
-topNav.setAttribute("class", "topnav");
+// const topNav = document.createElement("div");
+// topNav.setAttribute("class", "topnav");
 
-const genreA = document.createElement("a");
-genreA.setAttribute("class", "active");
-genreA.innerHTML = "Genres";
-topNav.appendChild(genreA);
+// const genreA = document.createElement("a");
+// genreA.setAttribute("class", "active");
+// genreA.innerHTML = "Genres";
+// topNav.appendChild(genreA);
 
-const movieA = document.createElement("a");
-movieA.setAttribute("href", moviesUrl);
-movieA.innerHTML = "Movies";
-topNav.appendChild(movieA);
+// const movieA = document.createElement("a");
+// movieA.setAttribute("href", moviesUrl);
+// movieA.innerHTML = "Movies";
+// topNav.appendChild(movieA);
 
-const posterA = document.createElement("a");
-posterA.setAttribute("href", postersUrl);
-posterA.innerHTML = "Posters";
-topNav.appendChild(posterA);
+// const posterA = document.createElement("a");
+// posterA.setAttribute("href", postersUrl);
+// posterA.innerHTML = "Posters";
+// topNav.appendChild(posterA);
 
-body.appendChild(topNav);
+// body.appendChild(topNav);
 
 //*********** GENRE: CREATE NEW GENRE W/FETCH ******//
 
@@ -93,6 +93,7 @@ theForm.addEventListener("submit", function (event) {
   }
 
   closeForm();
+  location.reload();
 });
 
 //***********GENRE: FETCH & RENDER *****************//
@@ -152,12 +153,12 @@ function renderMovies(movies) {
   });
 }
 
-//************* POSTER: FETCH ************ */
+//************* POSTER: FETCH *************//
 function fetchPosters(movieId) {
   return fetch(`http://127.0.0.1:3000/movies/${movieId}/posters`);
 }
 
-//***********CARD CLASSES: GENRE & MOVIE *****************//
+//***********CARD CLASSES: GENRE *****************//
 class GenreCard {
   constructor(title, id, glynk) {
     this.title = title;
@@ -197,6 +198,8 @@ class GenreCard {
   }
 }
 
+
+//***********CARD CLASSES: MOVIES *****************//
 class MovieCard {
   constructor(title, id, lynk1,vote1, lynk2, vote2, lynk3, vote3) {
     this.title = title;
@@ -215,8 +218,8 @@ class MovieCard {
 
     //make each image own card //css card include vertical-align: top
     const pcard1 = document.createElement("div"); 
-    pcard1.setAttribute("class", "card"); //can have multiple class w/ corresponding CSS - that's what class for 
-    pcard1.setAttribute("id", "pcard"); //fix id issue later - unique one of a kind 
+    pcard1.setAttribute("class", "pcard"); //can have multiple class w/ corresponding CSS - that's what class for 
+    // pcard1.setAttribute("id", "pcard"); //fix id issue later - unique one of a kind 
     const poster1 = document.createElement("img");
     const votes1 = document.createElement("p");
     votes1.innerText = `Votes: ${this.vote1}`;
@@ -224,8 +227,8 @@ class MovieCard {
     pcard1.appendChild(poster1);
 
     const pcard2 = document.createElement("div");
-    pcard2.setAttribute("class", "card");
-    pcard2.setAttribute("id", "pcard")
+    pcard2.setAttribute("class", "pcard");
+    // pcard2.setAttribute("id", "pcard")
     const poster2 = document.createElement("img");
     const votes2 = document.createElement("p");
     votes2.innerText = `Votes: ${this.vote2}`;
@@ -233,16 +236,16 @@ class MovieCard {
     pcard2.appendChild(poster2);
 
     const pcard3 = document.createElement("div");
-    pcard3.setAttribute("class", "card");
-    pcard3.setAttribute("id", "pcard");
+    pcard3.setAttribute("class", "pcard");
+    // pcard3.setAttribute("id", "pcard");
     const poster3 = document.createElement("img");
     const votes3 = document.createElement("p");
     votes3.innerText = `Votes: ${this.vote3}`;
     pcard3.appendChild(votes3);
     pcard3.appendChild(poster3);
 
-    mcard.setAttribute("class", "card");
-    mcard.setAttribute("id", "mcard");
+    mcard.setAttribute("class", "mcard");
+    // mcard.setAttribute("id", "mcard");
 
     title.innerText = this.title;
     poster1.setAttribute("src", this.lynk1);
@@ -258,7 +261,7 @@ class MovieCard {
   }
 }
 
-//CALLING THE FUNCTIONS
+//***********GO!!!!!*****************//
 document.addEventListener("DOMContentLoaded", function () {
   console.log("The DOM has loaded");
   fetchGenres();
