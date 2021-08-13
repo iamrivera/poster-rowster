@@ -10,12 +10,13 @@
 }
 
 body {
+  margin: 0px;
+  font-family: Arial, Helvetica, sans-serif;
   background-color: rgb(34, 31, 32);
 }
 
 .topnav {
   overflow: hidden;
-  background-color: #333;
 }
 
 .topnav a {
@@ -33,12 +34,8 @@ body {
 }
 
 .topnav a.active {
-  background-color: #dce7e6;
+  background-color: #bb1321;
   color: white;
-}
-
-{
-  box-sizing: border-box;
 }
 
 /* Button used to open the contact form - fixed at the bottom of the page */
@@ -53,6 +50,13 @@ body {
   bottom: 23px;
   right: 28px;
   width: 280px;
+}
+
+.btn-cancel {
+  background-color: white;
+  width: 100%;
+  border-color: white;
+  padding-bottom: 24px;
 }
 
 /* The popup form - hidden by default */

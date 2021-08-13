@@ -43,6 +43,13 @@ const movieContainer = document.createElement("div");
 movieContainer.setAttribute("class", "movie-container");
 body.appendChild(movieContainer);
 
+const logo = document.createElement("div");
+logo.setAttribute("class", "logo");
+const logoImg = document.createElement("img");
+logoImg.setAttribute("src","https://myproject-images.s3.us-east-2.amazonaws.com/PosterRoasterLogo.PNG");
+logo.appendChild(logoImg);
+body.appendChild(logo);
+
 //*********** GENRE: CREATE NEW GENRE W/FETCH POST ******//
 
 let openPopFormBtn = document.createElement("button");
@@ -79,9 +86,9 @@ function closeForm() {
 
 const theForm = document.getElementById("theForm");
 const closeBtn = document.createElement("button");
-closeBtn.className = "btn cancel";
+closeBtn.className = "btn-cancel";
 closeBtn.id = "close-button";
-closeBtn.textContent = "Close";
+closeBtn.textContent = "👎";
 genrePopForm.appendChild(closeBtn);
 closeBtn.addEventListener("click", closeForm);
 
