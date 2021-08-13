@@ -1,7 +1,6 @@
 //*** TODO ****//
-//poster has a vote button the increases the vote count after user clicks it --> Figure out backend
-//genre button does not submit on close button click
-//back or home button - html backend home page see line 28 
+//Main Goals: Achieved
+//Stretch Goals: Add Poster, Add Movie, Sort Posters by Vote, Advanced CSS Styling
 
 //*** CONSTANTS ***//
 
@@ -21,7 +20,10 @@ topNav.setAttribute("class", "topnav");
 
 const genreA = document.createElement("a");
 genreA.setAttribute("class", "active");
-genreA.setAttribute("href", "file://wsl%24/Ubuntu/home/iamrivera/phasefour/project_four/try-this-again-api/index.html")
+genreA.setAttribute(
+  "href",
+  "file://wsl%24/Ubuntu/home/iamrivera/phasefour/project_four/try-this-again-api/index.html"
+);
 genreA.innerHTML = "Home";
 topNav.appendChild(genreA);
 
@@ -36,7 +38,6 @@ topNav.appendChild(genreA);
 // topNav.appendChild(posterA);
 
 body.appendChild(topNav);
-
 
 const movieContainer = document.createElement("div");
 movieContainer.setAttribute("class", "movie-container");
@@ -80,9 +81,9 @@ const theForm = document.getElementById("theForm");
 const closeBtn = document.createElement("button");
 closeBtn.className = "btn cancel";
 closeBtn.id = "close-button";
-closeBtn.textContent = "Close"
+closeBtn.textContent = "Close";
 genrePopForm.appendChild(closeBtn);
-closeBtn.addEventListener("click",closeForm)
+closeBtn.addEventListener("click", closeForm);
 
 theForm.addEventListener("submit", function (event) {
   event.preventDefault();
@@ -105,7 +106,6 @@ theForm.addEventListener("submit", function (event) {
 
   location.reload();
 });
-
 
 //***********GENRE: FETCH & RENDER *****************//
 function fetchGenres() {
